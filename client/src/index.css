@@ -44,7 +44,7 @@
   --header-height: 64px;
 }
 
-[data-theme='light'] {
+html[data-theme='light'] {
   /* Core Backgrounds */
   --bg-primary: #FAF1E6;      /* Light beige background */
   --bg-secondary: #E4EFE7;    /* Subtle sections / Sidebar */
@@ -268,14 +268,14 @@ h4 { font-size: 1.1rem; font-weight: 600; }
 input[type="date"] {
   color-scheme: dark;
 }
-[data-theme='light'] input[type="date"] {
+html[data-theme='light'] input[type="date"] {
   color-scheme: light;
 }
 html:not([data-theme='light']) input[type="date"]::-webkit-calendar-picker-indicator {
   filter: invert(0.8);
   cursor: pointer;
 }
-[data-theme='light'] input[type="date"]::-webkit-calendar-picker-indicator {
+html[data-theme='light'] input[type="date"]::-webkit-calendar-picker-indicator {
   cursor: pointer;
 }
 
