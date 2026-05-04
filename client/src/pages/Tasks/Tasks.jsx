@@ -241,6 +241,65 @@ const StatusUpdateModal = ({ isOpen, onClose, task, onUpdated }) => {
 };
 
 // ─── Kanban Column ────────────────────────────────────────────────────────────
+const TaskCard = ({ task, onEdit, onDelete, onStatusUpdate, isAdmin }) => {
+  const isOverdue = task.dueDate && task.status !== 'done' && isPast(new Date(task.dueDate));
+  return (
+    <div className="task-card">
+      <div className="task-card-title">{task.title}</div>
+      {task.description && (
+        <p className="text-xs text-muted" style={{ marginBottom: '0.5rem', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+          {task.description}
+        </p>
+      )}
+      <div className="task-card-tags">
+        <PriorityBadge priority={task.priority} />
+        {task.projectId?.name && (
+          <span className="badge" style={{ background: 'rgba(79,156,249,0.1)', color: 'var(--accent-blue)' }}>
+            {task.projectId.name}
+          </span>
+        )}
+      </div>
+      <div className="task-card-meta">
+        <div className="flex items-center gap-2 text-xs text-muted">
+          {task.assignedTo ? (
+            <div className="flex items-center gap-1">
+              <div className="avatar avatar-sm" data-tooltip={task.assignedTo.name}>
+                {task.assignedTo.name[0].toUpperCase()}
+              </div>
+              <span>{task.assignedTo.name}</span>
+            </div>
+          ) : (
+            <span style={{ color: 'var(--text-muted)' }}>Unassigned</span>
+          )}
+          {task.dueDate && (
+            <span className={isOverdue ? 'overdue' : ''}>
+              <Calendar size={11} style={{ display: 'inline', marginRight: 2 }} />
+              {isOverdue ? 'Overdue' : format(new Date(task.dueDate), 'MMM d')}
+            </span>
+          )}
+        </div>
+        <div className="flex items-center gap-1">
+          {isAdmin ? (
+            <>
+              <button className="btn-ghost" onClick={() => onEdit(task)} data-tooltip="Edit" style={{ padding: '0.25rem' }}>
+                <Pencil size={13} />
+              </button>
+              <button className="btn-ghost" onClick={() => onDelete(task._id)} data-tooltip="Delete" style={{ padding: '0.25rem', color: 'var(--accent-red)' }}>
+                <Trash2 size={13} />
+              </button>
+            </>
+          ) : (
+            <button className="btn btn-secondary btn-sm" onClick={() => onStatusUpdate(task)}>
+              <ArrowUpDown size={12} /> Status
+            </button>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// ─── Kanban Column ────────────────────────────────────────────────────────────
 const KanbanColumn = ({ title, status, tasks, color, onEdit, onDelete, onStatusUpdate, isAdmin }) => (
   <div className="kanban-column">
     <div className="kanban-column-header">
@@ -256,63 +315,16 @@ const KanbanColumn = ({ title, status, tasks, color, onEdit, onDelete, onStatusU
           No tasks here
         </div>
       )}
-      {tasks.map((task) => {
-        const isOverdue = task.dueDate && task.status !== 'done' && isPast(new Date(task.dueDate));
-        return (
-          <div key={task._id} className="task-card">
-            <div className="task-card-title">{task.title}</div>
-            {task.description && (
-              <p className="text-xs text-muted" style={{ marginBottom: '0.5rem', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
-                {task.description}
-              </p>
-            )}
-            <div className="task-card-tags">
-              <PriorityBadge priority={task.priority} />
-              {task.projectId?.name && (
-                <span className="badge" style={{ background: 'rgba(79,156,249,0.1)', color: 'var(--accent-blue)' }}>
-                  {task.projectId.name}
-                </span>
-              )}
-            </div>
-            <div className="task-card-meta">
-              <div className="flex items-center gap-2 text-xs text-muted">
-                {task.assignedTo ? (
-                  <div className="flex items-center gap-1">
-                    <div className="avatar avatar-sm" data-tooltip={task.assignedTo.name}>
-                      {task.assignedTo.name[0].toUpperCase()}
-                    </div>
-                    <span>{task.assignedTo.name}</span>
-                  </div>
-                ) : (
-                  <span style={{ color: 'var(--text-muted)' }}>Unassigned</span>
-                )}
-                {task.dueDate && (
-                  <span className={isOverdue ? 'overdue' : ''}>
-                    <Calendar size={11} style={{ display: 'inline', marginRight: 2 }} />
-                    {isOverdue ? 'Overdue' : format(new Date(task.dueDate), 'MMM d')}
-                  </span>
-                )}
-              </div>
-              <div className="flex items-center gap-1">
-                {isAdmin ? (
-                  <>
-                    <button className="btn-ghost" onClick={() => onEdit(task)} data-tooltip="Edit" style={{ padding: '0.25rem' }}>
-                      <Pencil size={13} />
-                    </button>
-                    <button className="btn-ghost" onClick={() => onDelete(task._id)} data-tooltip="Delete" style={{ padding: '0.25rem', color: 'var(--accent-red)' }}>
-                      <Trash2 size={13} />
-                    </button>
-                  </>
-                ) : (
-                  <button className="btn btn-secondary btn-sm" onClick={() => onStatusUpdate(task)}>
-                    <ArrowUpDown size={12} /> Status
-                  </button>
-                )}
-              </div>
-            </div>
-          </div>
-        );
-      })}
+      {tasks.map((task) => (
+        <TaskCard
+          key={task._id}
+          task={task}
+          isAdmin={isAdmin}
+          onEdit={onEdit}
+          onDelete={onDelete}
+          onStatusUpdate={onStatusUpdate}
+        />
+      ))}
     </div>
   </div>
 );
@@ -474,7 +486,7 @@ const Tasks = () => {
         </span>
       </div>
 
-      {/* Kanban Board */}
+      {/* Kanban Board or Grid based on filter */}
       {filtered.length === 0 ? (
         <div className="empty-state">
           <div className="empty-state-icon"><CheckSquare size={32} /></div>
@@ -487,6 +499,19 @@ const Tasks = () => {
               <Plus size={16} /> Create Task
             </button>
           )}
+        </div>
+      ) : statusFilter ? (
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '1.25rem', alignItems: 'start' }}>
+          {filtered.map((task) => (
+            <TaskCard
+              key={task._id}
+              task={task}
+              isAdmin={isAdmin}
+              onEdit={(t) => { setEditingTask(t); setShowCreate(true); }}
+              onDelete={handleDelete}
+              onStatusUpdate={(t) => setStatusUpdateTask(t)}
+            />
+          ))}
         </div>
       ) : (
         <div className="kanban-board">
