@@ -45,23 +45,34 @@
 }
 
 [data-theme='light'] {
-  --bg-primary: #f3f4f6;
-  --bg-secondary: #ffffff;
-  --bg-card: #ffffff;
-  --bg-card-hover: #f9fafb;
-  --bg-input: #f3f4f6;
+  /* Core Backgrounds */
+  --bg-primary: #FAF1E6;      /* Light beige background */
+  --bg-secondary: #E4EFE7;    /* Subtle sections / Sidebar */
+  --bg-card: #FDFAF6;         /* Cards */
+  --bg-card-hover: #ffffff;
+  --bg-input: #E4EFE7;        /* Form inputs / subtle elements */
 
-  --border: #e5e7eb;
-  --border-light: #d1d5db;
+  /* Borders (subtly darker than the beige for contrast) */
+  --border: #e2d7cc;
+  --border-light: #ebe2d8;
 
-  --text-primary: #111827;
-  --text-secondary: #4b5563;
-  --text-muted: #6b7280;
+  /* Typography */
+  --text-primary: #2d3748;
+  --text-secondary: #4a5568;
+  --text-muted: #718096;
 
-  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1);
-  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1);
-  --shadow-glow: 0 0 30px rgba(124,106,247,0.1);
+  /* Accent Override - Using the new Green (#99BC85) as primary */
+  --accent-purple: #99BC85;
+  --accent-purple-light: #afd49b;
+  --accent-blue: #86a673;     /* Muted darker green for hover states */
+  --gradient-primary: linear-gradient(135deg, #99BC85, #88ab75);
+  --gradient-card: linear-gradient(135deg, rgba(153,188,133,0.15), rgba(153,188,133,0.05));
+
+  /* Shadows tailored to lighter backgrounds */
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08);
+  --shadow-glow: 0 0 30px rgba(153,188,133,0.2);
 }
 
 /* ─── Reset ──────────────────────────────────────────────────────────────── */
