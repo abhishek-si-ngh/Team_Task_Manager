@@ -75,6 +75,27 @@ html[data-theme='light'] {
   --shadow-glow: 0 0 30px rgba(153,188,133,0.2);
 }
 
+/* ─── Light Mode Overrides for Components ───────────────────────────────── */
+html[data-theme='light'] .nav-link.active {
+  background: var(--gradient-card);
+  color: #1a202c; /* Darker text for readability */
+}
+
+html[data-theme='light'] .nav-link.active .nav-icon {
+  color: var(--accent-purple); /* The primary green */
+}
+
+html[data-theme='light'] .btn-secondary:hover {
+  background: var(--bg-card-hover);
+  color: #1a202c;
+  border-color: var(--accent-purple);
+}
+
+html[data-theme='light'] .btn-ghost:hover {
+  color: #1a202c;
+  background: var(--bg-card-hover);
+}
+
 /* ─── Reset ──────────────────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
