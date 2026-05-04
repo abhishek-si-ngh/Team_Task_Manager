@@ -443,6 +443,16 @@ const Tasks = () => {
         </select>
         <select
           className="filter-select"
+          value={statusFilter}
+          onChange={(e) => updateFilter('status', e.target.value)}
+        >
+          <option value="">All Statuses</option>
+          <option value="todo">To Do</option>
+          <option value="in-progress">In Progress</option>
+          <option value="done">Done</option>
+        </select>
+        <select
+          className="filter-select"
           value={priorityFilter}
           onChange={(e) => updateFilter('priority', e.target.value)}
         >

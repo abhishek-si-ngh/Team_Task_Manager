@@ -514,6 +514,7 @@ html[data-theme='light'] input[type="date"]::-webkit-calendar-picker-indicator {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1.25rem;
+  align-items: start;
 }
 
 .kanban-column {
@@ -521,7 +522,10 @@ html[data-theme='light'] input[type="date"]::-webkit-calendar-picker-indicator {
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: 1.25rem;
-  min-height: 400px;
+  padding-right: 0.75rem; /* reduce padding slightly to accommodate scrollbar */
+  max-height: calc(100vh - 220px);
+  display: flex;
+  flex-direction: column;
 }
 
 .kanban-column-header {
@@ -560,6 +564,22 @@ html[data-theme='light'] input[type="date"]::-webkit-calendar-picker-indicator {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+
+.task-cards-list::-webkit-scrollbar {
+  width: 4px;
+}
+.task-cards-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+.task-cards-list::-webkit-scrollbar-thumb {
+  background: var(--border-light);
+  border-radius: 4px;
+}
+.task-cards-list::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
 }
 
 /* ─── Task Card ──────────────────────────────────────────────────────────── */
