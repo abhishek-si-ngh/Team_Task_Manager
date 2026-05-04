@@ -48,12 +48,7 @@ const Dashboard = () => {
     fetchDashboard();
   }, []);
 
-  const greeting = () => {
-    const hour = new Date().getHours();
-    if (hour < 12) return 'Good morning';
-    if (hour < 18) return 'Good afternoon';
-    return 'Good evening';
-  };
+  const { stats, recentTasks, tasksPerUser } = data || {};
 
   if (loading) {
     return (
@@ -62,8 +57,6 @@ const Dashboard = () => {
       </div>
     );
   }
-
-  const { stats, recentTasks, tasksPerUser } = data || {};
 
   const completionRate = stats?.total > 0
     ? Math.round((stats.done / stats.total) * 100)
@@ -74,10 +67,10 @@ const Dashboard = () => {
       {/* Header */}
       <div style={{ marginBottom: '2rem' }}>
         <h1 className="page-title">
-          {greeting()}, {user?.name?.split(' ')[0]} 👋
+          Dashboard
         </h1>
         <p className="text-sm text-muted" style={{ marginTop: '0.25rem' }}>
-          Here's what's happening with your projects today.
+          Overview of your team's tasks and projects.
         </p>
       </div>
 
@@ -178,7 +171,9 @@ const Dashboard = () => {
                       <div className="avatar avatar-sm">{userStats.name !== 'Unassigned' ? userStats.name.substring(0, 2).toUpperCase() : '?'}</div>
                       <span className="text-sm font-medium">{userStats.name}</span>
                     </div>
-                    <div className="badge badge-admin">{userStats.count} tasks</div>
+                    <div className="badge" style={{ background: 'var(--bg-input)', color: 'var(--text-primary)', border: '1px solid var(--border)' }}>
+                      {userStats.count} {userStats.count === 1 ? 'task' : 'tasks'}
+                    </div>
                   </div>
                 ))}
               </div>
