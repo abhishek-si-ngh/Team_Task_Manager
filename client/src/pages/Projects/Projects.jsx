@@ -139,7 +139,7 @@ const ManageMembersModal = ({ isOpen, onClose, project, onUpdated }) => {
                     className="btn btn-danger btn-sm"
                     onClick={() => handleRemoveMember(member._id || member)}
                     disabled={loading}
-                    title="Remove Member"
+                    data-tooltip="Remove Member"
                   >
                     <UserMinus size={13} />
                   </button>
@@ -174,7 +174,7 @@ const ManageMembersModal = ({ isOpen, onClose, project, onUpdated }) => {
                   className="btn btn-secondary btn-sm"
                   onClick={() => handleAddMember(user._id)}
                   disabled={loading}
-                  title="Add Member"
+                  data-tooltip="Add Member"
                 >
                   <UserPlus size={13} /> Add
                 </button>
@@ -339,7 +339,7 @@ const Projects = () => {
                         <div
                           key={m._id || i}
                           className="avatar avatar-sm"
-                          title={m.name}
+                          data-tooltip={m.name}
                         >
                           {(m.name || '?')[0].toUpperCase()}
                         </div>
@@ -356,14 +356,14 @@ const Projects = () => {
                         <button
                           className="btn btn-ghost btn-sm"
                           onClick={(e) => handleManageMembers(e, project)}
-                          title="Manage members"
+                          data-tooltip="Manage members"
                         >
                           <Users size={15} />
                         </button>
                         <button
                           className="btn btn-ghost btn-sm"
                           onClick={(e) => handleDelete(e, project._id)}
-                          title="Delete project"
+                          data-tooltip="Delete project"
                           style={{ color: 'var(--accent-red)' }}
                         >
                           <Trash2 size={15} />

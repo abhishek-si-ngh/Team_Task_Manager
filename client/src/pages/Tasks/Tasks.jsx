@@ -278,7 +278,7 @@ const KanbanColumn = ({ title, status, tasks, color, onEdit, onDelete, onStatusU
               <div className="flex items-center gap-2 text-xs text-muted">
                 {task.assignedTo ? (
                   <div className="flex items-center gap-1">
-                    <div className="avatar avatar-sm" title={task.assignedTo.name}>
+                    <div className="avatar avatar-sm" data-tooltip={task.assignedTo.name}>
                       {task.assignedTo.name[0].toUpperCase()}
                     </div>
                     <span>{task.assignedTo.name}</span>
@@ -296,10 +296,10 @@ const KanbanColumn = ({ title, status, tasks, color, onEdit, onDelete, onStatusU
               <div className="flex items-center gap-1">
                 {isAdmin ? (
                   <>
-                    <button className="btn-ghost" onClick={() => onEdit(task)} title="Edit" style={{ padding: '0.25rem' }}>
+                    <button className="btn-ghost" onClick={() => onEdit(task)} data-tooltip="Edit" style={{ padding: '0.25rem' }}>
                       <Pencil size={13} />
                     </button>
-                    <button className="btn-ghost" onClick={() => onDelete(task._id)} title="Delete" style={{ padding: '0.25rem', color: 'var(--accent-red)' }}>
+                    <button className="btn-ghost" onClick={() => onDelete(task._id)} data-tooltip="Delete" style={{ padding: '0.25rem', color: 'var(--accent-red)' }}>
                       <Trash2 size={13} />
                     </button>
                   </>
