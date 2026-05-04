@@ -63,7 +63,7 @@ const Dashboard = () => {
     );
   }
 
-  const { stats, recentTasks } = data || {};
+  const { stats, recentTasks, tasksPerUser } = data || {};
 
   const completionRate = stats?.total > 0
     ? Math.round((stats.done / stats.total) * 100)
@@ -134,36 +134,56 @@ const Dashboard = () => {
 
       {/* Bottom Section - Side by Side on Desktop */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '2rem', alignItems: 'start' }}>
-        {/* Completion Rate */}
-        <div className="card">
-          <div className="flex items-center justify-between" style={{ marginBottom: '0.75rem' }}>
-            <h3>Overall Completion</h3>
-            <span style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--accent-green)' }}>
-              {completionRate}%
-            </span>
-          </div>
-          <div
-            style={{
-              height: 10,
-              background: 'var(--bg-input)',
-              borderRadius: 999,
-              overflow: 'hidden',
-            }}
-          >
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+          {/* Completion Rate */}
+          <div className="card">
+            <div className="flex items-center justify-between" style={{ marginBottom: '0.75rem' }}>
+              <h3>Overall Completion</h3>
+              <span style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--accent-green)' }}>
+                {completionRate}%
+              </span>
+            </div>
             <div
               style={{
-                height: '100%',
-                width: `${completionRate}%`,
-                background: 'var(--gradient-primary)',
+                height: 10,
+                background: 'var(--bg-input)',
                 borderRadius: 999,
-                transition: 'width 0.8s ease',
+                overflow: 'hidden',
               }}
-            />
+            >
+              <div
+                style={{
+                  height: '100%',
+                  width: `${completionRate}%`,
+                  background: 'var(--gradient-primary)',
+                  borderRadius: 999,
+                  transition: 'width 0.8s ease',
+                }}
+              />
+            </div>
+            <div className="flex justify-between text-xs text-muted" style={{ marginTop: '0.5rem' }}>
+              <span>{stats?.done ?? 0} done</span>
+              <span>{stats?.total ?? 0} total</span>
+            </div>
           </div>
-          <div className="flex justify-between text-xs text-muted" style={{ marginTop: '0.5rem' }}>
-            <span>{stats?.done ?? 0} done</span>
-            <span>{stats?.total ?? 0} total</span>
-          </div>
+
+          {/* Tasks Per User */}
+          {tasksPerUser && tasksPerUser.length > 0 && (
+            <div className="card">
+              <h3 style={{ marginBottom: '1.25rem' }}>Tasks Per User</h3>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                {tasksPerUser.map((userStats, index) => (
+                  <div key={index} className="flex items-center justify-between" style={{ padding: '0.5rem 0', borderBottom: index !== tasksPerUser.length - 1 ? '1px solid var(--border)' : 'none' }}>
+                    <div className="flex items-center gap-2">
+                      <div className="avatar avatar-sm">{userStats.name !== 'Unassigned' ? userStats.name.substring(0, 2).toUpperCase() : '?'}</div>
+                      <span className="text-sm font-medium">{userStats.name}</span>
+                    </div>
+                    <div className="badge badge-admin">{userStats.count} tasks</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Recent Tasks */}

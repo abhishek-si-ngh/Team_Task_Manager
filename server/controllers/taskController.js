@@ -169,10 +169,33 @@ const getDashboardStats = async (req, res) => {
       projectCount = await Project.countDocuments({ members: req.user._id });
     }
 
+    // Tasks per user
+    const tasksPerUser = await Task.aggregate([
+      { $match: baseQuery },
+      { $group: { _id: '$assignedTo', count: { $sum: 1 } } },
+      {
+        $lookup: {
+          from: 'users',
+          localField: '_id',
+          foreignField: '_id',
+          as: 'user',
+        },
+      },
+      { $unwind: { path: '$user', preserveNullAndEmptyArrays: true } },
+      {
+        $project: {
+          name: { $ifNull: ['$user.name', 'Unassigned'] },
+          count: 1,
+        },
+      },
+      { $sort: { count: -1 } },
+    ]);
+
     res.status(200).json({
       success: true,
       stats: { total, todo, inProgress, done, overdue, projectCount },
       recentTasks,
+      tasksPerUser,
     });
   } catch (error) {
     console.error('Dashboard error:', error);
