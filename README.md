@@ -11,7 +11,9 @@ A full-stack web application for managing teams, projects, and tasks with role-b
 - 📁 **Project Management** — Create projects, add/remove team members
 - ✅ **Task Management** — Create, assign, update, and delete tasks
 - 📊 **Dashboard** — Real-time stats: total, in-progress, done, overdue tasks
-- 🎯 **Kanban Board** — Visual task tracking across To Do / In Progress / Done columns
+- 🎯 **Kanban Board** — Visual task tracking with custom scrollable columns
+- 📱 **Dynamic Grid View** — Auto-switches to space-optimized CSS Grid when filtering tasks
+- 🎨 **Modern UI/UX** — Custom animated tooltips, dark mode, and dynamic glassmorphism
 - 🔍 **Filtering** — Filter tasks by project, priority, and status
 
 ## 🧰 Tech Stack
@@ -19,11 +21,11 @@ A full-stack web application for managing teams, projects, and tasks with role-b
 | Layer | Technology |
 |-------|-----------|
 | Frontend | React + Vite |
-| Styling | Custom CSS (dark theme design system) |
+| Styling | Custom CSS (Modern Design System, CSS Grid/Flexbox) |
 | Backend | Node.js + Express |
 | Database | MongoDB (Mongoose) |
 | Auth | JWT + bcrypt |
-| Deployment | Railway (backend) + Vercel (frontend) |
+| Deployment | Railway (Full Stack Multi-Service) |
 
 ## 👥 Role Permissions
 
@@ -45,10 +47,10 @@ Team Task Manager/
 ├── client/               # React + Vite frontend
 │   ├── src/
 │   │   ├── api/          # Axios API client
-│   │   ├── components/   # Reusable UI components
+│   │   ├── components/   # Reusable UI components (TaskCard, Tooltips)
 │   │   ├── context/      # AuthContext
 │   │   └── pages/        # Dashboard, Projects, Tasks, Auth
-│   └── package.json
+│   └── vite.config.js
 │
 └── server/               # Express backend
     ├── config/           # MongoDB connection
@@ -120,19 +122,23 @@ App runs at: `http://localhost:3000`
 | PUT | `/api/tasks/:id` | Admin / Member | Update task |
 | DELETE | `/api/tasks/:id` | Project Admin | Delete task |
 
-## ☁️ Deployment
+## ☁️ Deployment (Railway)
 
-### Backend → Railway
-1. Push code to GitHub
-2. Create new Railway project → Deploy from GitHub
-3. Set environment variables: `MONGO_URI`, `JWT_SECRET`, `NODE_ENV=production`, `CLIENT_URL`
-4. Railway auto-detects Node.js and runs `npm start`
+This application is configured for a multi-service monorepo deployment on **Railway**.
 
-### Frontend → Vercel
-1. Import GitHub repo in Vercel
-2. Set root directory to `client`
-3. Set env: `VITE_API_URL=https://your-railway-app.railway.app/api`
-4. Deploy
+### 1. Backend Service
+1. Create new service from GitHub repo.
+2. Set Root Directory: `/server`
+3. Variables needed: `MONGO_URI`, `JWT_SECRET`, `PORT`, `CLIENT_URL` (Frontend Domain).
+4. Auto-detects Node.js and uses `npm start`.
+
+### 2. Frontend Service
+1. Create second service from the **same** GitHub repo.
+2. Set Root Directory: `/client`
+3. Set Build Command: `npm run build`
+4. Set Start Command: `npm start`
+5. Variables needed: `VITE_API_URL` (Backend Domain + `/api`).
+6. *Note: Ensure `vite.config.js` has `allowedHosts: true` for the preview server.*
 
 ## 🔒 Environment Variables
 
@@ -142,12 +148,12 @@ PORT=5000
 MONGO_URI=mongodb+srv://...
 JWT_SECRET=your_secret_key
 NODE_ENV=production
-CLIENT_URL=https://your-vercel-app.vercel.app
+CLIENT_URL=https://your-frontend-app.up.railway.app
 ```
 
 ### Client (`client/.env`)
 ```
-VITE_API_URL=https://your-railway-app.railway.app/api
+VITE_API_URL=https://your-backend-app.up.railway.app/api
 ```
 
 ## 📄 License
