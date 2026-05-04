@@ -2,35 +2,35 @@
 
 /* ─── Design Tokens ──────────────────────────────────────────────────────── */
 :root {
-  --bg-primary: #0d0f14;
-  --bg-secondary: #151821;
-  --bg-card: #1a1d27;
-  --bg-card-hover: #1f2335;
-  --bg-input: #1e2130;
+  --bg-primary: #0F1412;
+  --bg-secondary: #285A48; /* Sidebar */
+  --bg-card: #1B2420;
+  --bg-card-hover: #222d28;
+  --bg-input: #1B2420;
 
-  --border: #2a2f45;
-  --border-light: #333857;
+  --border: #2a3b33;
+  --border-light: #364d42;
 
-  --text-primary: #e8eaf6;
-  --text-secondary: #8b92b5;
-  --text-muted: #555f84;
+  --text-primary: #E6EFE9;
+  --text-secondary: #B0E4CC;
+  --text-muted: #7ca895;
 
-  --accent-purple: #7c6af7;
-  --accent-purple-light: #9d8ff9;
-  --accent-blue: #4f9cf9;
+  --accent-purple: #99BC85; /* Keeping same as light theme */
+  --accent-purple-light: #B0E4CC;
+  --accent-blue: #408A71;
   --accent-teal: #2dd4bf;
   --accent-green: #22c55e;
   --accent-amber: #f59e0b;
   --accent-red: #ef4444;
 
-  --gradient-primary: linear-gradient(135deg, #7c6af7, #4f9cf9);
-  --gradient-card: linear-gradient(135deg, rgba(124,106,247,0.1), rgba(79,156,249,0.05));
+  --gradient-primary: linear-gradient(135deg, #99BC85, #408A71);
+  --gradient-card: linear-gradient(135deg, rgba(153,188,133,0.1), rgba(64,138,113,0.05));
   --gradient-danger: linear-gradient(135deg, #ef4444, #dc2626);
 
   --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
   --shadow-md: 0 4px 20px rgba(0,0,0,0.4);
   --shadow-lg: 0 8px 40px rgba(0,0,0,0.5);
-  --shadow-glow: 0 0 30px rgba(124,106,247,0.15);
+  --shadow-glow: 0 0 30px rgba(153,188,133,0.15);
 
   --radius-sm: 8px;
   --radius-md: 12px;
