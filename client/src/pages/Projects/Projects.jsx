@@ -139,6 +139,7 @@ const ManageMembersModal = ({ isOpen, onClose, project, onUpdated }) => {
                     className="btn btn-danger btn-sm"
                     onClick={() => handleRemoveMember(member._id || member)}
                     disabled={loading}
+                    title="Remove Member"
                   >
                     <UserMinus size={13} />
                   </button>
@@ -173,6 +174,7 @@ const ManageMembersModal = ({ isOpen, onClose, project, onUpdated }) => {
                   className="btn btn-secondary btn-sm"
                   onClick={() => handleAddMember(user._id)}
                   disabled={loading}
+                  title="Add Member"
                 >
                   <UserPlus size={13} /> Add
                 </button>
