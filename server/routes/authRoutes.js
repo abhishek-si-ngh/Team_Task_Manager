@@ -1,6 +1,6 @@
 const express = require('express');
 const { body } = require('express-validator');
-const { signup, login, getMe, getAllUsers } = require('../controllers/authController');
+const { signup, login, getMe, getAllUsers, forgotPassword, resetPassword } = require('../controllers/authController');
 const { protect } = require('../middleware/auth');
 
 const router = express.Router();
@@ -20,6 +20,8 @@ const loginValidation = [
 
 router.post('/signup', signupValidation, signup);
 router.post('/login', loginValidation, login);
+router.post('/forgotpassword', forgotPassword);
+router.put('/resetpassword/:token', resetPassword);
 router.get('/me', protect, getMe);
 router.get('/users', protect, getAllUsers);
 
