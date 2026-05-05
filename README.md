@@ -4,6 +4,8 @@ A full-stack web application for managing teams, projects, and tasks with role-b
 
 ![Tech Stack](https://img.shields.io/badge/Stack-MERN-blue) ![License](https://img.shields.io/badge/License-MIT-green)
 
+**Live Demo:** [https://diligent-blessing-production-0bd6.up.railway.app/](https://diligent-blessing-production-0bd6.up.railway.app/)
+
 ## ✨ Features
 
 - 🔐 **JWT Authentication** — Signup/Login with secure token-based sessions
