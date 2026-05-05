@@ -15,7 +15,8 @@ const taskRoutes = require('./routes/taskRoutes');
 
 const numCPUs = os.cpus().length;
 
-if (cluster.isPrimary || cluster.isMaster) {
+// Disable clustering in production/Railway to save memory
+if ((cluster.isPrimary || cluster.isMaster) && process.env.NODE_ENV !== 'production') {
   console.log(`Primary process ${process.pid} is running`);
 
   // Fork workers for each CPU
@@ -29,6 +30,10 @@ if (cluster.isPrimary || cluster.isMaster) {
     cluster.fork();
   });
 } else {
+  // If in production, just run the app normally without clustering to save RAM
+  if (cluster.isPrimary || cluster.isMaster) {
+     console.log('Running in production mode: Skipping clustering to save memory.');
+  }
   // Connect to MongoDB
   connectDB();
 
